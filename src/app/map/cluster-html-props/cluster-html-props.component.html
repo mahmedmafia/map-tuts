@@ -1,0 +1,53 @@
+<mgl-map id="map" [style]="'mapbox://styles/mapbox/light-v11'" [zoom]="[5]" [center]=" [-68.137343, 45.137451]"
+    [projection]="{'name':'mercator'}" (mapCreate)="mapO = $event">
+</mgl-map>
+<mgl-map  [style]="'mapbox://styles/mapbox/light-v11'" [zoom]="[5]" [center]=" [-68.137343, 45.137451]"
+[projection]="{'name':'mercator'}" (mapCreate)="x = $event">
+
+    <mgl-control mglNavigation></mgl-control>
+    <mgl-geojson-source id="earthquakes" [data]="earthQuackes" [cluster]="true" [clusterRadius]="80"
+
+></mgl-geojson-source>
+<mgl-layer id="earthquake_label" type="symbol" source='earthquakes' [filter]="['!=', 'cluster',true]" [layout]="{
+    'text-field': ['number-format',15,{ 'min-fraction-digits': 1, 'max-fraction-digits': 1 }],
+    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+    'text-size': 12
+    }" [paint]="{
+        'text-color': {
+            property:'15',
+            type:'interval',
+            stops:[
+                [0,'black'],
+                [3,'white']
+            ]
+        }
+    }">
+</mgl-layer>
+<!-- <mgl-layer id="earthquake_label" type="symbol" source="earthquakes" [filter]=" ['!=', 'cluster', true]"
+        [layout]="{
+            'text-field':[
+            'number-format',
+            ['get','mag'],
+            { 'min-fraction-digits': 1, 'max-fraction-digits': 1 }
+            ],
+            'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+'text-size': 10
+        }" [paint]="{
+            'text-color': {
+            property:'mag',
+            type:'categorical',
+            stops:[
+                [0,'black'],
+                [3,'white']
+            ]
+        }
+        }"></mgl-layer> -->
+        <!-- [paint]="{
+            'text-color':[
+            'case',
+            ['<',['get','mag'],3],
+            'black',
+            'white'
+            ]
+        }" -->
+</mgl-map>
